@@ -23,6 +23,4 @@ public class Employee {
 	private LocalDate hireDate;
 	private String postion;
 	private UUID departmentId;
-	
-	
 }
