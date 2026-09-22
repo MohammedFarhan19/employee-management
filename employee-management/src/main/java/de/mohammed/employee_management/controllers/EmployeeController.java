@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +28,16 @@ public class EmployeeController {
 					, LocalDate.of(2000, Month.APRIL, 10)
 					, "Programmer"
 					, UUID.randomUUID())
-					)
+					,
+			new Employee(UUID.randomUUID()
+					, "Thomas"
+					, "Schmidt"
+					, "t.schmidt@musteremail.de"
+					, "26598"
+					, LocalDate.of(1999, Month.DECEMBER, 3)
+					, "Sales"
+					, UUID.randomUUID())
+			)
 			);
 			
 	
@@ -37,8 +47,19 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/meineEmployees")
-	public ArrayList<Employee> getAllEmployees(){
+	public ArrayList<Employee> findAllEmployees(){
 		return employees;
 	}
+	
+	/**
+	 * Methode um einen bestimmten Employee zu finden je nach id
+	 * @return Employee
+	 */
+	@GetMapping("{employeeid}")
+	public UUID findOneEmployee(@PathVariable UUID employeeid) {
+		return employeeid;
+	}
+	
+	
 
 }
