@@ -23,7 +23,7 @@ public class EmployeeController {
 					, "John"
 					, "Doe"
 					, "john.doe@example.de"
-					, "01256523"
+					, "012565 23"
 					, LocalDate.of(2000, Month.APRIL, 10)
 					, "Programmer"
 					, UUID.randomUUID())
