@@ -4,10 +4,14 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -55,11 +59,50 @@ public class EmployeeController {
 	 * Methode um einen bestimmten Employee zu finden je nach id
 	 * @return Employee
 	 */
-	@GetMapping("{employeeid}")
-	public UUID findOneEmployee(@PathVariable UUID employeeid) {
-		return employeeid;
+	@GetMapping("/{employeeId}")
+	public Optional<Employee> findEinenEmployee(@PathVariable UUID employeeId) {
+		Optional<Employee> employee = employees.stream()
+				 .filter(emp -> emp.getId().equals(employeeId))
+				 .findFirst();
+		return employee;
+		
+	}
+	
+	@PostMapping
+	public Employee createOne(@RequestBody Employee employee) {
+//		System.out.println(employee.getFirstName());
+		employee.setId(UUID.randomUUID());
+		employee.setDepartmentId(UUID.randomUUID());
+		employees.add(employee);
+		return employee;
+	}
+	
+	/**
+	 * Methode um ein Employee zu löschen
+	 * @param employeeId
+	 */
+	@DeleteMapping("/{employeeId}")
+	public void deleteOne(@PathVariable UUID employeeId) {
+		Optional<Employee> employee = employees.stream()
+			     .filter(emp -> emp.getId().equals(employeeId))
+			     .findFirst();
+		
+		if(employee.isPresent()) {
+			employees.remove(employee.get());
+		}
 	}
 	
 	
 
 }
+
+
+
+
+
+
+
+
+
+
+
