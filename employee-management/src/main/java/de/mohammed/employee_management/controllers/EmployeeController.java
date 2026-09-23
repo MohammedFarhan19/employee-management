@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -93,8 +94,31 @@ public class EmployeeController {
 	}
 	
 	
-
+	/**
+	 * Methode um ein Employee zu updaten
+	 * @param employeeId
+	 * @param employee
+	 * @return
+	 */
+	@PutMapping("/{employeeId}")
+		public Employee updateOne(@PathVariable UUID employeeId, @RequestBody Employee employee) {
+			Optional<Employee> empOptional = employees.stream()
+												      .filter(emp -> emp.getId().equals(employeeId))
+												      .findFirst();
+			if(empOptional.isPresent()) {
+				empOptional.get().setFirstName(employee.getFirstName());
+				empOptional.get().setLastName(employee.getLastName());
+				empOptional.get().setEmail(employee.getEmail());
+				empOptional.get().setPhoneNumber(employee.getPhoneNumber());
+				empOptional.get().setPosition(employee.getPosition());
+				empOptional.get().setHireDate(employee.getHireDate());
+				empOptional.get().setFirstName(employee.getFirstName());
+				empOptional.get().setDepartmentId(employee.getDepartmentId());
+			}
+			return employee;
+		}
 }
+
 
 
 
